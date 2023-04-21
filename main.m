@@ -1,17 +1,17 @@
 @import AVFoundation;
 #import <CydiaSubstrate/CydiaSubstrate.h>
 #import "silence.h"
-#define SHOW_ALERTS
 #define DURATION 50
 
 void alert(NSString* message)
 {
-#ifdef SHOW_ALERTS
-	Class AlertClass=NSClassFromString(@"SBDismissOnlyAlertItem");
-	NSObject* alertItem=[[AlertClass alloc] initWithTitle:@"pods hack" body:message];
-	[AlertClass activateAlertItem:alertItem];
-	alertItem.release;
-#endif
+	if([NSFileManager.defaultManager fileExistsAtPath:@"/var/mobile/.amy.pods-alerts-enable"])
+	{
+		Class AlertClass=NSClassFromString(@"SBDismissOnlyAlertItem");
+		NSObject* alertItem=[[AlertClass alloc] initWithTitle:@"pods hack" body:message];
+		[AlertClass activateAlertItem:alertItem];
+		alertItem.release;
+	}
 }
 
 @interface PodsHack:NSObject

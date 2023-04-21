@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 name=ios-6-pods-hack
 target=SpringBoard
-version=1
+version=2
 
 rm -rf package
 mkdir -p package/Library/MobileSubstrate/DynamicLibraries package/DEBIAN
@@ -16,7 +16,7 @@ deb="$name.deb"
 # https://github.com/anars/blank-audio/raw/master/1-minute-of-silence.mp3
 xxd -i silence.mp3 > silence.h
 
-xcrun -sdk iphoneos clang -dynamiclib -fmodules -Wno-unused-getter-return-value -arch armv7 -miphoneos-version-min=6 -F . -framework CydiaSubstrate main.m -o "$dylib"
+xcrun -sdk iphoneos clang -dynamiclib -fmodules -Wno-unused-getter-return-value -arch armv6 -arch armv7 -arch arm64 -miphoneos-version-min=6 -F . -framework CydiaSubstrate main.m -o "$dylib"
 
 PlistBuddy -c 'add Filter:Executables array' "$plist"
 PlistBuddy -c "add Filter:Executables:0 string $target" "$plist"
